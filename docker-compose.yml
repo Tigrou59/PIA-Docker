@@ -1,27 +1,30 @@
 version: '3'
 services:
   cnil-pia-back:
-    image: lrqdo/cnil-pia-back
+    container_name: LINCnil-pia-back
+    image: pia-docker_cnil-pia-back
     restart: unless-stopped
     environment:
       - DATABASE_HOST=database
       - DATABASE_USERNAME=postgres
-      - DATABASE_PASSWORD='somepassword'
-      - SECRET_KEY_BASE='somesecret'
+      - DATABASE_PASSWORD=rootpostgres
+      - SECRET_KEY_BASE=postgres
     depends_on:
       - database
     ports:
       - "3000:3000"
   cnil-pia-front:
-    image: lrqdo/cnil-pia-front
+    container_name: LINCnil-pia-front
+    image: pia-docker_cnil-pia-front
     restart: unless-stopped
     ports:
       - "8080:80"
   database:
+    container_name: LINCnil-pia-db
+    image: postgres:10.3
     restart: unless-stopped
-    image: postgres:10.1
     environment:
-      - POSTGRES_PASSWORD='somepassword'
+      - POSTGRES_PASSWORD=rootpostgres
     volumes:
       - pgdata:/var/lib/postgresql/data
 volumes:
